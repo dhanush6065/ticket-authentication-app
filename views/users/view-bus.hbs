@@ -1,0 +1,286 @@
+<div class="container-fluid fade-in">
+    <div class="row p-5">
+        <div class="col-md-12 m-auto pt-5" style="text-align: center;">
+            {{#if bus}}
+            <table class="table text-dark p-5" style="table-layout: fixed;">
+                <thead class="text-light" style="font-weight: 800;">
+                    <tr>
+                        <th scope="col">Number</th>
+                        <th scope="col">Bus Name</th>
+                        <th scope="col">Bus Number</th>
+                        <th scope="col">Starting Time</th>
+                        <th scope="col">Starting Date</th>
+                        <th scope="col">Ending Date</th>
+                        <th scope="col">Maximum Capacity</th>
+                        <th scope="col">Reg.no</th>
+                        <th scope="col">Stops</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Emergency</th>
+                    </tr>
+                </thead>
+                <tbody style="font-weight: 800;">
+                    {{#each bus}}
+                    <tr>
+                        <td class="pt-5">{{@index}}</td>
+                        <td class="pt-5">{{this.bname}}</td>
+                        <td class="pt-5">{{this.busnumber}}</td>
+                        <td class="pt-5">{{this.stime}}</td>
+                        <td class="pt-5">{{this.sdate}}</td>
+                        <td class="pt-5">{{this.edate}}</td>
+                        <td class="pt-5">{{this.max}}</td>
+                        <td class="pt-5">{{this.price}}</td>
+                        <td class="pt-5">{{#each this.stops}}
+                            {{#if this.name1}}{{this.name1}},{{/if}}
+                            {{#if this.name2}}{{this.name2}},{{/if}}
+                            {{#if this.name3}}{{this.name3}},{{/if}}
+                            {{#if this.name4}}{{this.name4}},{{/if}}
+                            {{#if this.name5}}{{this.name5}},{{/if}}
+                            {{#if this.name6}}{{this.name6}},{{/if}}
+                            {{#if this.name7}}{{this.name7}},{{/if}}
+                            {{#if this.name8}}{{this.name8}},{{/if}}
+                            {{#if this.name9}}{{this.name9}},{{/if}}
+                            {{#if this.name10}}{{this.name10}},{{/if}}
+                            {{/each}}</td>
+                        <td class="pt-5">
+                            {{#if editing}}
+                            <a href="/editbus?id={{this._id}}" class="btn btn-primary"><b>EDIT</b></a>
+                            {{else}}
+                            <small>ⓘ Editing possible only after {{edate}}</small>
+                            <style>
+                                small {
+                                    font-weight: 800;
+                                }
+                            </style>
+                            {{/if}}
+                        </td>
+                        <td class="pt-4">
+                            <button href="" class="btn btn-outline-danger" onclick="toggleChatPopup1('{{_id}}')">inform</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <h1 class="text-dark mt-5 pt-5 bounce"
+                style="font-family: fantasy; font-weight: 800; font-size: 90px;text-shadow: 3px 3px 5px rgba(66, 94, 237, 0.8);">
+                NOTHING FOUND
+            </h1>
+            {{/if}}
+        </div>
+        <!-- Chat popup -->
+        <div id="chatPopup1" class="chat-popup1 text-center" style="border-radius: 20px;">
+            <span class="close1" onclick="closeChatPopup1()">&times;</span>
+            <h2><b class="text-danger"><i class="text-danger">Warning</i> ⚠</b></h2>
+            <div id="chatMessages1" class="chat-messages1">
+                <!-- Example chat messages -->
+                <div class="chat-message1">
+                    <p style="font-weight: 800;"><i>"This option is reserved for dire need alone. Should you misuse it
+                            for
+                            unlawful deeds, consequences shall be your own. Should any troubles befall your clients, the
+                            weight
+                            of responsibility rests on your shoulders. 'Ticket Sure' shall bear no blame for the
+                            fallout."</i></p>
+                </div>
+            </div>
+
+            <button style="font-weight: 800;width: 100%;" class="submit-button" onclick="sendMessage1(); return false;">I
+                Agree</button>
+
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay1" id="overlay1" onclick="closeChatPopup1()"></div>
+
+        <script>
+            var ids = null;
+            function toggleChatPopup1(id) {
+                ids = id;
+                var popup = document.getElementById("chatPopup1");
+                var overlay = document.getElementById("overlay1");
+                var button = document.querySelector(".chat-button1");
+
+                if (popup.style.display === "block") {
+                    popup.style.display = "none";
+                    overlay.style.display = "none";
+                    button.classList.remove("clicked");
+                } else {
+                    popup.style.display = "block";
+                    overlay.style.display = "block";
+                    button.classList.add("clicked");
+                }
+            }
+
+            function closeChatPopup1() {
+                var popup = document.getElementById("chatPopup1");
+                var overlay = document.getElementById("overlay1");
+                var button = document.querySelector(".chat-button1");
+
+                popup.style.display = "none";
+                overlay.style.display = "none";
+                button.classList.remove("clicked");
+            }
+
+            function sendMessage1() {
+                //alert(ids)
+                var local = 'http://localhost:3000';
+                var ngrock = '';
+                $.ajax({
+                    url: '/emergency',
+                    method: 'post',
+                    data: 
+                    {
+                        id:ids
+                    },
+                    success: (response) => {
+                        window.location.href = `${local}/emergency?id=${response.id}`
+                    }
+                })
+            }
+        </script>
+    </div>
+</div>
+
+<style>
+    /* Style for the table */
+    .table {
+        background-color: #ffffff;
+        /* White background color */
+        color: #000;
+        /* Dark text color */
+        border-radius: 10px;
+        /* Rounded corners */
+        font-weight: 800;
+    }
+
+    /* Style for table headings */
+    .table th {
+        background-color: #3f58d8;
+        /* Background color for headings */
+        border: none;
+        /* Remove border */
+    }
+
+    /* Style for table body */
+    .table tbody tr:nth-child(even) {
+        background-color: #e6e9f7;
+        /* Alternate row color */
+    }
+
+    /* Style for table cell content */
+    .table td,
+    .table th {
+        padding: 10px;
+        /* Padding for cell content */
+    }
+
+    /* Fade-in animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .fade-in {
+        animation: fadeIn 2s ease-in-out;
+    }
+</style>
+
+<style>
+    /* Styles for the chat button */
+    /* Chat button icon when clicked */
+    .chat-button1.clicked {
+        background-color: #007bff;
+        /* Change color when clicked */
+    }
+
+    /* Chat button icon when clicked */
+    .chat-button1.clicked i.material-icons::before {
+        content: "message";
+        /* Change icon to message symbol when clicked */
+    }
+
+    /* Styles for the chat popup */
+    .chat-popup1 {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        /* Higher z-index than overlay */
+        background-color: white;
+        border: 1px solid #ccc;
+        width: 500px;
+        padding: 20px;
+        box-shadow: 0px 4px 8px rgba(176, 17, 17, 0.1);
+    }
+
+    /* Close button style */
+    .close1 {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    /* Styles for chat messages */
+    .chat-messages1 {
+        max-height: 200px;
+        /* Adjust as needed */
+        overflow-y: auto;
+    }
+
+    .chat-message1 {
+        margin-bottom: 10px;
+    }
+
+    /* Styles for the input box */
+    .chat-input1 {
+        width: calc(100% - 40px);
+        padding: 5px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    /* Styles for the submit button */
+    .submit-button1 {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Overlay styles */
+    .overlay1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Semi-transparent black */
+        backdrop-filter: blur(5px);
+        /* Blur effect */
+        z-index: 1000;
+        /* Same as chat button */
+        display: none;
+        /* Initially hidden */
+    }
+
+    /* Styles for user messages */
+    .user-message1 {
+        text-align: right;
+        /* Align user messages to the right */
+    }
+</style>

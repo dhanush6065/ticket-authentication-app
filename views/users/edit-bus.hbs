@@ -1,0 +1,377 @@
+<div class="container-fluid" id="#proform" style="background-image: url(/images/Ticketsmall.png);">
+    <div class="row p-5">
+        <div class="col-md-8 m-auto pt-5">
+            {{#if info}}
+            <h1 class="mt-5 pt-5" id="notaccept">REQUEST SUCCESSFULLY COMMITED WAIT FOR ADMIN RESPONSE</h1>
+            <style>
+                #notaccept {
+                    font-weight: 800;
+                    font-size: 100px;
+                    text-shadow: 2px 2px 4px rgba(66, 94, 237, 0.8)
+                }
+            </style>
+            {{else}}
+
+            <div class="pt-5">
+                <div id="myForm" class="p-4 mt-5"
+                    style="box-shadow: #a1aff2 0px 8px 24px, #bec7f2 0px 16px 56px, #e2e3e7 0px 24px 80px;">
+                    <h1 id="hding" style="text-align: center; font-family: sans-serif; font-weight: 800;"
+                        class="mt-2 p-3">
+                        <b><span class="word">EDIT</span> <span class="word">YOUR</span> <span class="word">BUS</span>
+                            <span class="word">DETAILS</span></b>
+                    </h1>
+
+                    <style>
+                        .word {
+                            display: inline-block;
+                            /* Make each word inline-block */
+                            opacity: 0;
+                            /* Initially hide the words */
+                            animation: fadeInWords 2.5s forwards;
+                            /* Animation definition */
+                            animation-delay: calc(0.2s * var(--index));
+                            /* Delay based on word index */
+                            transform: translateX(-100%);
+                            /* Start off-screen on the left */
+                        }
+
+                        @keyframes fadeInWords {
+                            0% {
+                                opacity: 0;
+                                transform: translateX(-100%);
+                            }
+
+                            100% {
+                                opacity: 1;
+                                transform: translateX(0);
+                            }
+                        }
+                    </style>
+
+                    <form id="proform" class="ml-5 mr-5 " action="/editbus?id={{businfo._id}}" method="post"
+                        onsubmit="return submitForm()" style="padding-top: 20px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="bname">Enter Bus Name</label>
+                                    <input type="text" name="bname" class="form-control" placeholder="Name"
+                                        value="{{businfo.bname}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="busnumber">BUS Number</label>
+                                    <input type="text" name="busnumber" class="form-control" placeholder="KL XX XXXX"
+                                        value="{{businfo.busnumber}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <p><b>Previous Starting Time <span class="p-2"
+                                                style="background-color: yellow;">{{businfo.stime}}</span></b></p>
+                                    <label for="stime">Starting Time</label>
+                                    <input type="time" name="stime" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+
+                                    <p><b>Previous Starting and Ending Date <span class="p-2"
+                                                style="background-color: yellow;">{{businfo.sdate}} To
+                                                {{businfo.edate}}</span></b></p>
+
+                                    <div class="form-group ">
+                                        <label for="exampleInputEmail1"><b>Service Date</b></label>
+                                        <div style="display: flex;justify-content: space-between;">
+
+                                            <input name="sdate" type="date" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="Start" style="width: 40%;">
+                                            <label for="exampleInputEmail1"><b>To </b></label>
+                                            <input name="edate" type="date" class="form-control" id="exampleInputEmail1"
+                                                aria-describedby="emailHelp" placeholder="End" style="width: 40%;">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="lino">Bus Licence Number</label>
+                                    <input type="text" name="lino" class="form-control" placeholder="LI :- 23XXXXXXXX56"
+                                        value="{{businfo.lino}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="max">Maximum Capacity</label>
+                                    <input type="number" value="{{businfo.max}}" name="max" class="form-control"
+                                        placeholder="40" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Reg.no</label>
+                                    <input type="text" value="{{businfo.price}}" name="price" class="form-control"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <p><b>Previous Stops And Prices</b></p>
+                                    <p style="font-weight: 800;background-color: yellow;" class="p-2 text-center">
+                                       
+                                        {{#each businfo.stops}}
+                                        {{#if this.name1}}{{this.name1}},{{/if}}
+                                        {{#if this.name2}}{{this.name2}},{{/if}}
+                                        {{#if this.name3}}{{this.name3}},{{/if}}
+                                        {{#if this.name4}}{{this.name4}},{{/if}}
+                                        {{#if this.name5}}{{this.name5}},{{/if}}
+                                        {{#if this.name6}}{{this.name6}},{{/if}}
+                                        {{#if this.name7}}{{this.name7}},{{/if}}
+                                        {{#if this.name8}}{{this.name8}},{{/if}}
+                                        {{#if this.name9}}{{this.name9}},{{/if}}
+                                        {{#if this.name10}}{{this.name10}},{{/if}}
+                                        {{/each}}
+                                        <br>
+                                         Price : -
+                                        {{#each businfo.pri}}
+                                        {{#if this.pri1}}{{this.pri1}} ₹,{{/if}}
+                                        {{#if this.pri2}}{{this.pri2}} ₹,{{/if}}
+                                        {{#if this.pri3}}{{this.pri3}} ₹,{{/if}}
+                                        {{#if this.pri4}}{{this.pri4}} ₹,{{/if}}
+                                        {{#if this.pri5}}{{this.pri5}} ₹,{{/if}}
+                                        {{#if this.pri6}}{{this.pri6}} ₹,{{/if}}
+                                        {{#if this.pri7}}{{this.pri7}} ₹,{{/if}}
+                                        {{#if this.pri8}}{{this.pri8}} ₹,{{/if}}
+                                        {{#if this.pri9}}{{this.pri9}} ₹,{{/if}}
+                                        {{#if this.pri10}}{{this.pri10}} ₹,{{/if}}
+                                        {{/each}}
+                                        <br>
+                                         Dis : -
+                                        {{#each businfo.dis}}
+                                        {{#if this.dis1}}{{this.dis1}} km,{{/if}}
+                                        {{#if this.dis2}}{{this.dis2}} km,{{/if}}
+                                        {{#if this.dis3}}{{this.dis3}} km,{{/if}}
+                                        {{#if this.dis4}}{{this.dis4}} km,{{/if}}
+                                        {{#if this.dis5}}{{this.dis5}} km,{{/if}}
+                                        {{#if this.dis6}}{{this.dis6}} km,{{/if}}
+                                        {{#if this.dis7}}{{this.dis7}} km,{{/if}}
+                                        {{#if this.dis8}}{{this.dis8}} km,{{/if}}
+                                        {{#if this.dis9}}{{this.dis9}} km,{{/if}}
+                                        {{#if this.dis10}}{{this.dis10}} km,{{/if}}
+                                        {{/each}}
+                                    </p><br>
+                                    <label for="numInputs" class="mt-2">Enter Number of Stops</label>
+                                    <input type="number" id="numInputs" name="numInputs" min="1" class="form-control"
+                                        required onchange="generateInputs()"> <br>
+                                    <div class="typing-container">
+
+                                    </div>
+                                    <small id="stopmax" class="text-danger" style="display: none;">Maximum Limit
+                                        Reached</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group inline-div ">
+                            <label id="stopname"></label>
+                            <div id="container">
+                                <!-- Input boxes and labels will be dynamically added here -->
+                            </div>
+                        </div>
+                        <div class="form-group inline-div ml-3 " id="placeprice" style="display: none;">
+                            <label id="stopname" class="">Stop Price</label> <br>
+                            <div id="p&p">
+                                <!-- Input boxes and labels will be dynamically added here -->
+                            </div>
+                        </div>
+
+                        <style>
+                            .inline-div {
+                                width: 48%;
+                                display: inline-block;
+                                vertical-align: top;
+                                margin-right: 10px;
+
+                            }
+                        </style>
+
+                        <button id="submitButton" type="submit" class="btn btn-primary mb-3"
+                            style="display: none; margin-top: 20px;width: 100%;">Submit</button>
+                    </form>
+                    <div class="typing-effect text-center" id="typingEffect" style="width: 100%;">
+                        <!-- Text will be dynamically inserted here -->
+
+                    </div>
+                </div>
+
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    <script>
+        const text = "This Data Validated By Admin So If The Data Is Invalid User Request Must Bee Not Accepted";
+        const typingEffect = document.getElementById('typingEffect');
+
+        // Clear existing text
+        typingEffect.innerHTML = '';
+
+        // Split text into words and create spans for each character with animation delay
+        text.split(' ').forEach((word, index) => {
+            if (index > 0) {
+                const spaceSpan = document.createElement('span');
+                spaceSpan.textContent = ' ';
+                typingEffect.appendChild(spaceSpan);
+            }
+
+            word.split('').forEach((char, charIndex) => {
+                const charSpan = document.createElement('span');
+                charSpan.classList.add('char');
+                charSpan.style.animationDelay = `${index * 0.2 + charIndex * 0.1}s`; // Adjust delay between characters
+                charSpan.textContent = char;
+                typingEffect.appendChild(charSpan);
+            });
+        });
+    </script>
+
+    <script>
+        function isreturn() {
+            document.getElementById('isreturn').style.display = 'block';
+        }
+
+        function noReturn() {
+            document.getElementById('isreturn').style.display = 'none';
+        }
+
+        function generateInputs() {
+
+            var numInputs = parseInt(document.getElementById('numInputs').value);
+            var container = document.getElementById('container');
+            container.innerHTML = ''; // Clear previous inputs
+            var pandp = document.getElementById('p&p');
+            pandp.innerHTML = ''; // Clear previous inputs
+
+            if (numInputs < 21) {
+                for (var i = 1; i <= numInputs; i++) {
+                    var label = document.createElement('label');
+                    label.textContent = "Stop " + i;
+
+                    container.appendChild(label);
+
+                    var input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'stops input-box form-control';
+                    input.name = 'name' + i;
+                    input.style.marginBottom = "90px"
+                    container.appendChild(input);
+
+                    // Add <br> tag after each input
+                    container.appendChild(document.createElement('br'));
+                }
+                for (var i = 1; i <= numInputs - 1; i++) {
+                    var plabeld = document.createElement('label');
+                    var plabelt = document.createElement('label');
+                    plabeld.textContent = "Distance " + i + " To " + (i + 1);
+                    plabelt.textContent = " Price " + i + " To " + (i + 1);
+                    plabelt.className = 'mt-3';
+                    pandp.appendChild(plabeld);
+
+
+                    var pinputd = document.createElement('input');
+                    pinputd.type = 'text';
+                    pinputd.className = 'd input-box form-control ';
+                    pinputd.name = 'dis' + i;
+                    pandp.appendChild(pinputd);
+                    pandp.appendChild(plabelt);
+                    var pinputp = document.createElement('input');
+                    pinputp.type = 'text';
+                    pinputp.className = 'p input-box form-control';
+                    pinputp.name = 'pri' + i;
+                    pandp.appendChild(pinputp);
+
+
+                    // Add <br> tag after each input
+                    pandp.appendChild(document.createElement('br'));
+                }
+                document.getElementById('stopname').innerHTML = "Enter Stop Names ";
+                document.getElementById('stopmax').style.display = 'none';
+                document.getElementById('submitButton').style.display = 'block';
+                document.getElementById('placeprice').style.display = ""
+            } else {
+                document.getElementById('stopname').innerHTML = "";
+                document.getElementById('stopmax').style.display = 'block';
+                document.getElementById('submitButton').style.display = 'none';
+            }
+
+            // Show the submit button
+
+        }
+
+        function submitForm() {
+            // You can add your form submission logic here if needed
+            return true; // Returning true to allow form submission
+        }
+    </script>
+
+    <style>
+        .p,
+        .d {
+            width: 100%;
+        }
+
+        #myForm {
+            opacity: 0;
+            /* Initially hide the form */
+            transform: translateY(-50px);
+            /* Start off-screen to the top */
+            animation: slideInFromTop 2.0s ease-in-out forwards;
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        input {
+            font-weight: 800;
+        }
+
+        label {
+            font-weight: 800;
+        }
+
+        #hding {
+            text-align: center;
+            font-family: sans-serif;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(66, 94, 237, 0.8);
+        }
+
+        .typing-container {
+            width: 100%;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 10px;
+            /* Adjust font size for small tag */
+            display: inline-block;
+
+        }
+
+        .typing-effect {
+            display: inline-block;
+        }
+
+        .char {
+            display: inline-block;
+            opacity: 0;
+            animation: typing 1s forwards;
+            /* Adjust timing to make it faster */
+            color: rgba(66, 94, 237, 0.8);
+            font-weight: 800;
+            /* Preserve white space */
+        }
+
+        @keyframes typing {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .stops {
+            width: 100%;
+        }
+    </style>

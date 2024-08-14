@@ -1,0 +1,96 @@
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div id="log" class="container-fluid">
+    <div class="row">
+        <div id="logindiv" class="col-md-12 p-5"
+            style="border-radius: 10px; width: auto; box-shadow: rgba(38, 28, 180, 0.92) 0px 10px 20px, rgba(14, 55, 188, 0.971) 0px 6px 6px;">
+            <form class="text-dark" action="/admin/login" method="post" id="login">
+                <h1 id="loginhd" class="text-center text-dark" style="font-weight: 800; color: rgb(38, 38, 37);">
+                    <b>SWITCH TO YOUR ACCOUNT</b>
+                </h1>
+                <p style="color: red;">
+                    {{#if logerr}}
+                    Incorrect Username or Password
+                    {{/if}}
+                </p>
+                <div class="form-group">
+                    <label class="" for="exampleInputEmail1">UserName</label>
+                    <input name="name" type="text" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label class="" for="exampleInputPassword1">Password</label>
+                    <input name="password" type="password" class="form-control" id="exampleInputPassword1"
+                        placeholder="Password" required>
+                </div>
+                <div class="form-group" style="text-align: right;">
+                </div>
+                <button type="submit" style="width: 100%; border-radius: 12px;" class="btn btn-dark">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{#if logerr}}
+<style>
+    #log {
+        background-image: url();
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+{{else}}
+<style>
+    #log {
+        background-image: url();
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #logindiv {
+        opacity: 0;
+        transform: perspective(600px) rotateX(-90deg);
+        transform-origin: top;
+        animation: flipIn 1.3s ease-in-out forwards;
+    }
+
+    @keyframes flipIn {
+        0% {
+            opacity: 0;
+            transform: perspective(600px) rotateX(-90deg);
+        }
+
+        100% {
+            opacity: 1;
+            transform: perspective(600px) rotateX(0);
+        }
+    }
+</style>
+{{/if}}
+
+<style>
+    input {
+        font-weight: 800;
+    }
+
+    label {
+        font-weight: 800;
+    }
+
+    #loginhd {
+        font-weight: 800;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        text-shadow: 2px 2px 4px rgba(43, 78, 254, 0.8);
+    }
+</style>
